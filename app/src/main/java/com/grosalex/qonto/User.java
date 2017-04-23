@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 public class User implements Parcelable {
     private static final String TAG = "User";
+    private String website;
     private int id;
     private String name;
     private String username;
@@ -27,6 +28,7 @@ public class User implements Parcelable {
             username=json.getString("username");
             email=json.getString("email");
             phone=json.getString("phone");
+            website=json.getString("website");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -75,6 +77,10 @@ public class User implements Parcelable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getWebsite() {
+        return website;
     }
 
     @Override

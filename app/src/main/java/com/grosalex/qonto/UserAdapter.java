@@ -26,11 +26,17 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         // each data item is just a string in this case
         public CardView cardView;
         public TextView userNameTextView;
+        public TextView phoneTextview;
+        public TextView emailTextview;
+        public TextView websiteTextview;
         public ViewHolder(View v) {
             super(v);
            // mTextView = v;
             cardView =(CardView)v.findViewById(R.id.user_card);
             userNameTextView=(TextView)v.findViewById(R.id.user_name);
+            phoneTextview=(TextView)v.findViewById(R.id.user_phone);
+            websiteTextview=(TextView)v.findViewById(R.id.user_website);
+            emailTextview=(TextView)v.findViewById(R.id.user_email);
         }
     }
 
@@ -60,7 +66,9 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         // - replace the contents of the view with that element
        // holder.mTextView.setText((CharSequence) mDataset.get(position));
         holder.userNameTextView.setText(mDataset.get(position).getName());
-
+        holder.emailTextview.setText(mDataset.get(position).getEmail());
+        holder.websiteTextview.setText(mDataset.get(position).getWebsite());
+        holder.phoneTextview.setText(mDataset.get(position).getPhone());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
