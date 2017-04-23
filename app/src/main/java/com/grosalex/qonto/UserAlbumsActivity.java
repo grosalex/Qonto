@@ -1,5 +1,6 @@
 package com.grosalex.qonto;
 
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,38 +12,40 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class UserAlbumsActivity extends AppCompatActivity {
 
-    private String TAG="MainActivity";
-    private ArrayList<User> userList;
+    private static final String TAG = "UserAlbumsActivity";
+    private User selectedUser;
+    private ArrayList<Album> albumList;
     private RecyclerView mRecycler;
-    private UserAdapter userAdapter;
     private LinearLayoutManager mLayoutManager;
+    private AlbumAdapter albumAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        userList= new ArrayList<User>();
-        mRecycler=(RecyclerView)findViewById(R.id.user_recycler);
+        setContentView(R.layout.activity_user_albums);
+
+        selectedUser= (User)getIntent().getParcelableExtra("user");
+        Log.d(TAG, "onCreate: "+selectedUser.getId());
+        albumList = new ArrayList<Album>();
+        mRecycler=(RecyclerView)findViewById(R.id.album_recycler);
         mRecycler.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(mLayoutManager);
-        userAdapter = new UserAdapter(this,userList);
-        mRecycler.setAdapter(userAdapter);
+        albumAdapter = new AlbumAdapter(this,albumList);
+        mRecycler.setAdapter(albumAdapter);
         RequestQueue queue = Volley.newRequestQueue(this);
 
         JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                (Request.Method.GET, getString(R.string.users_url), null, new Response.Listener<JSONArray>() {
+                (Request.Method.GET, getString(R.string.album_url,selectedUser.getId()), null, new Response.Listener<JSONArray>() {
 
                     @Override
                     public void onResponse(JSONArray response) {
@@ -50,14 +53,14 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "onResponse: "+response);
                         for(int i=0;i<response.length();i++){
                             try {
-                                userList.add(new User(response.getJSONObject(i)));
-                                userAdapter.notifyDataSetChanged();
+                                albumList.add(new Album(response.getJSONObject(i)));
+                                albumAdapter.notifyDataSetChanged();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-                        userAdapter.notifyDataSetChanged();
+                        albumAdapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
 

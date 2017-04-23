@@ -15,9 +15,9 @@ import java.util.ArrayList;
  * Created by grosalex on 23/04/17.
  */
 
-class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
     private final Context mContext;
-    private ArrayList<User> mDataset;
+    private ArrayList<Album> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -25,47 +25,47 @@ class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public CardView cardView;
-        public TextView userNameTextView;
+        public TextView albumTitleTextView;
         public ViewHolder(View v) {
             super(v);
-           // mTextView = v;
-            cardView =(CardView)v.findViewById(R.id.user_card);
-            userNameTextView=(TextView)v.findViewById(R.id.user_name);
+            // mTextView = v;
+            cardView =(CardView)v.findViewById(R.id.album_card);
+            albumTitleTextView=(TextView)v.findViewById(R.id.album_title);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public UserAdapter(Context context,ArrayList<User> myDataset) {
+    public AlbumAdapter(Context context,ArrayList<Album> myDataset) {
         mDataset = myDataset;
         mContext=context;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public UserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public AlbumAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                     int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.user_item, parent, false);;
+                .inflate(R.layout.album_item, parent, false);;
         // set the view's size, margins, paddings and layout parameters
 
-        ViewHolder vh = new ViewHolder(v);
+        AlbumAdapter.ViewHolder vh = new AlbumAdapter.ViewHolder(v);
         return vh;
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(AlbumAdapter.ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-       // holder.mTextView.setText((CharSequence) mDataset.get(position));
-        holder.userNameTextView.setText(mDataset.get(position).getName());
+        // holder.mTextView.setText((CharSequence) mDataset.get(position));
+        holder.albumTitleTextView.setText(mDataset.get(position).getTitle());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(mContext,UserAlbumsActivity.class);
-                i.putExtra("user",mDataset.get(position));
+               // i.putExtra("user",mDataset.get(position));
                 mContext.startActivity(i);
 
             }
