@@ -2,4 +2,5 @@
     <string name="app_name">Qonto</string>
     <string name="users_url">https://jsonplaceholder.typicode.com/users</string>
     <string name="album_url">https://jsonplaceholder.typicode.com/users/%1$d/albums</string>
+    <string name="gallery_url" >https://jsonplaceholder.typicode.com/albums/%1$d/photos</string>
 </resources>
